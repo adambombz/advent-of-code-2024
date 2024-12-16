@@ -39,33 +39,29 @@ def consolidate(d):         #combine consecutive blank space blocks
 
 id-=1           #was previously at 1 above max id
 
-while id>0:
+while id>0:            #start at max id and count down
     found=False
-    for j in reversed(range(len(d))):
-        if found:
+    for j in reversed(range(len(d))):    #start from end of list to find ID block
+        if found:                        #if it's found then this loop wil break and run consolidate for adjacent empty spaces (ex. [[-1,3], [-1,1]] becomes [-1,4]
             d=consolidate(d)
             break
-        if d[j][0]==id:
+        if d[j][0]==id:                #find id
             found=True
-            lengthfound=d[j][1]
-            for i in range(j):
-                if d[i][0]==-1 and d[i][1]>=lengthfound:
-                    # print('found space', d[i], i)
-                    spacefound=d[i][1]
-                    d[j]=[-1, lengthfound]
-                    d.pop(i)
-                    d.insert(i,[id,lengthfound])
-                    if spacefound>lengthfound:
-                        # print("id",id)
+            lengthfound=d[j][1]        #storing length of file ID as indecies will start moving around
+            for i in range(j):            #loop to search for empty space
+                if d[i][0]==-1 and d[i][1]>=lengthfound:            #valid empty space found
+                    spacefound=d[i][1]        #store length of empty space
+                    d[j]=[-1, lengthfound]        #replace file we are moving with empty space
+                    d.pop(i)            #remove valid empty space block
+                    d.insert(i,[id,lengthfound])        #insert file into new spot
+                    if spacefound>lengthfound:        #if there was excess empty space, add it to after the newly moved file
                         d.insert(i+1,[-1,spacefound-lengthfound])
-                        j+=1
                     break
-
-    id-=1
+    id-=1        #look for next ID
 
 g=[]
 
-for i in d:             #convert to part 1 fmt
+for i in d:             #convert part 2 to part 1 fmt
     for j in range(i[1]):
         g.append(i[0])
 
