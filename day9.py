@@ -16,7 +16,7 @@ for i in range(len(f)):         #g is for pt1, d is for pt2. g format is as seen
         d.append([-1,int(f[i])])
 
 i=0
-while i <len(g):        #if blank space, move last item in list over
+while i <len(g):        #pt1 solve: if blank space, move last item in list over
     if g[i]==-1:
         g[i]=g.pop(len(g)-1)
     else:
@@ -25,7 +25,7 @@ while i <len(g):        #if blank space, move last item in list over
 pt1=0
 for i in range(len(g)):
     pt1+=(i*g[i])
-print(pt1)
+print(pt1)        #end pt1 solve
 
 def consolidate(d):         #combine consecutive blank space blocks
     i=0
@@ -39,7 +39,7 @@ def consolidate(d):         #combine consecutive blank space blocks
 
 id-=1           #was previously at 1 above max id
 
-while id>0:            #start at max id and count down
+while id>0:            #start pt2 solve: start at max id and count down
     found=False
     for j in reversed(range(len(d))):    #start from end of list to find ID block
         if found:                        #if it's found then this loop wil break and run consolidate for adjacent empty spaces (ex. [[-1,3], [-1,1]] becomes [-1,4]
@@ -58,7 +58,7 @@ while id>0:            #start at max id and count down
                         d.insert(i+1,[-1,spacefound-lengthfound])
                     break
     id-=1        #look for next ID
-
+#end pt2 solve
 g=[]
 
 for i in d:             #convert part 2 to part 1 fmt
